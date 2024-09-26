@@ -1,2 +1,1 @@
-# devops_helpers
-devops_helpers_by_elisska
+# devops-helpers
