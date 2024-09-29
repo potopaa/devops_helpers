@@ -1,6 +1,6 @@
 provider "google" {
   region  = var.region
   zone    = var.zone
-  project = var.project_id
-  #credentials = file("/downloads/compute-instance.json")
+  project = "devdataops-project"
+  credentials = file("/Users/mac/Downloads/devdataops-project.json")
 }
