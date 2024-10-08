@@ -19,3 +19,5 @@ resource "google_compute_instance" "vm_instance" {
 	tags = ["ssh", "devops-course"]
 	
 }
+
+
