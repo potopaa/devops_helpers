@@ -5,14 +5,14 @@ services:
     image: alpine
     container_name: app1
     networks:
-      - my-network
+      - potopaa-network
     command: sh -c "while true; do echo 'App1 pinging App2'; ping -c 1 app2 && sleep 5; done"
 
   app2:
     image: alpine
     container_name: app2
     networks:
-      - my-network
+      - potopaa-network
     command: sh -c "apk add --no-cache iputils && while true; do sleep 3600; done"
 
 networks:
