@@ -405,4 +405,3 @@ if __name__ == '__main__':
 
     analysis = GraphAnalysis()
     analysis.run_visualization(sys.argv[1])
-
