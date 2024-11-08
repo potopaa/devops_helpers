@@ -1,28 +1,30 @@
-FROM python:3.7-slim
+# First stage - Build
+FROM python:3.7-slim AS build
 
-# The WORKDIR instruction sets the working directory for any RUN, CMD, ENTRYPOINT, COPY and ADD instructions that follow it in the Dockerfile
-# this will create /app directory in Docker image
+# Set working directory
 WORKDIR /app
 
-# add group and user to run a container
-RUN groupadd -r webservice && useradd --no-log-init -r -g webservice webservice
-
-# this will install some packages
+# Install dependencies
 RUN pip install networkx dash plotly
 
-# this will copy application code to working directory
-#COPY . /app/
+# Copy application code
 COPY . .
 
-USER webservice:webservice
+# Second stage - Run
+FROM python:3.7-slim
 
-# indicates the ports on which a container listens for connections
+# Set working directory
+WORKDIR /app
+
+# Copy only necessary files and dependencies from build stage
+COPY --from=build /app /app
+
+# Create user for security
+RUN groupadd -r webservice && useradd --no-log-init -r -g webservice webservice
+
+# Set user and expose port
+USER webservice:webservice
 EXPOSE 8050
 
-# this command is started when container is ran
-# this is a form with PID 1 issues
-#CMD python GraphAnalysis.py obj_dependency_data.csv
-
-# this command is started when container is ran
-# below is recommended form of CMD
+# Run the application
 CMD ["python", "GraphAnalysis.py", "obj_dependency_data.csv"]
